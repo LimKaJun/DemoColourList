@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -55,9 +57,21 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view){
                 String colour = etElement.getText().toString();
                 // alColours .add (colour);
-                int pos =Integer.parseInt(etIndex.getText().toString());
-                alColours.add(pos,colour);
+                if (etIndex.getText().toString().isEmpty() == false){
+                    int pos =Integer.parseInt(etIndex.getText().toString());
+                    alColours.add(pos,colour);
+                }else{
+                    alColours.add(colour);
+                }
                 aaColours.notifyDataSetChanged();
+            }
+        });
+
+        lvColour.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String msg = alColours.get(position);
+                Toast.makeText(MainActivity.this, "Selected colour is: " + msg, Toast.LENGTH_SHORT).show();
             }
         });
     }
